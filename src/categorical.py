@@ -86,6 +86,12 @@ class CategoricalFeatures:
                     dataframe[new_col_name] = val[:, j]
             return dataframe
 
+        elif self.enc_type == "ohe":
+            return self.ohe(dataframe[self.cat_feats].values)
+        
+        else:
+            raise Exception("Encoding Type not understood")
+
 
 if __name__ == "__main__":
     import pandas as pd
