@@ -7,8 +7,8 @@ from sklearn import preprocessing
 
 """
 
-class CategoricalFeatures:
 
+class CategoricalFeatures:
     def __init__(self, df, categorical_features, encoding_type, handle_na=False):
         """
         df: Pandas Dataframe,
@@ -30,7 +30,6 @@ class CategoricalFeatures:
                 self.df.loc[:, c] = self.df.loc[:, c].astype(str).fillna("-9999999")
         self.output_df = self.df.copy(deep=True)
 
-    
     def _label_encoding(self):
         for c in self.cat_feats:
             lbl = preprocessing.LabelEncoder()
@@ -70,7 +69,7 @@ class CategoricalFeatures:
         if self.handle_na:
             for c in cat_feats:
                 dataframe.loc[:, c] = dataframe.loc[:, c].astype(str).fillna("-9999999")
-        
+
         if self.enc_type == "label":
             for c, lbl in self.label_encoders.items():
                 dataframe.loc[:, c] = lbl.transform(dataframe[c].values)
@@ -88,7 +87,7 @@ class CategoricalFeatures:
 
         elif self.enc_type == "ohe":
             return self.ohe(dataframe[self.cat_feats].values)
-        
+
         else:
             raise Exception("Encoding Type not understood")
 
@@ -96,6 +95,7 @@ class CategoricalFeatures:
 if __name__ == "__main__":
     import pandas as pd
     from sklearn import linear_model
+
     df = pd.read_csv("../input/train_cat.csv")
     df_test = pd.read_csv("../input/test_cat.csv")
     sample = pd.read_csv("../input/sample_submission_cat.csv")
@@ -106,10 +106,9 @@ if __name__ == "__main__":
     full_data = pd.concat([df, df_test])
 
     cols = [c for c in df.columns if c not in ["id", "target"]]
-    cat_feats = CategoricalFeatures(full_data, 
-                                    categorical_features=cols, 
-                                    encoding_type="ohe", 
-                                    handle_na=True)
+    cat_feats = CategoricalFeatures(
+        full_data, categorical_features=cols, encoding_type="ohe", handle_na=True
+    )
 
     full_data_transformed = cat_feats.fit_transform()
 

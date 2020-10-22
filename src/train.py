@@ -17,7 +17,7 @@ FOLD_MAPPING = {
     1: [0, 2, 3, 4],
     2: [0, 1, 3, 4],
     3: [0, 1, 2, 4],
-    4: [0, 1, 2, 3]
+    4: [0, 1, 2, 3],
 }
 
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     df = pd.read_csv(TRAINING_DATA)
     df_test = pd.read_csv(TEST_DATA)
     train_df = df[df.kfold.isin(FOLD_MAPPING.get(FOLD))]
-    valid_df = df[df.kfold==FOLD]
+    valid_df = df[df.kfold == FOLD]
 
     ytrain = train_df.target.values
     yvalid = valid_df.target.values
@@ -38,7 +38,11 @@ if __name__ == "__main__":
     label_encoders = {}
     for c in train_df.columns:
         lbl = preprocessing.LabelEncoder()
-        lbl.fit(train_df[c].values.tolist() + valid_df[c].values.tolist() + df_test[c].values.tolist())
+        lbl.fit(
+            train_df[c].values.tolist()
+            + valid_df[c].values.tolist()
+            + df_test[c].values.tolist()
+        )
         train_df.loc[:, c] = lbl.transform(train_df[c].values.tolist())
         valid_df.loc[:, c] = lbl.transform(valid_df[c].values.tolist())
         label_encoders[c] = lbl
