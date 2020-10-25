@@ -1,4 +1,4 @@
-name: deeplearning
+name: ml
 channels:
   - pytorch
   - defaults
