@@ -73,7 +73,7 @@ class CrossValidation:
             self.dataframe.loc[len(self.dataframe) - num_holdout_samples :, "kfold"] = 1
 
         elif self.problem_type == "multilabel_classification":
-            if num_targets != 1:
+            if self.num_targets != 1:
                 raise Exception("Invalid number of targets for this problem type")
             targets = self.dataframe[self.target_cols[0]].apply(
                 lambda x: len(str(x).split(self.multilabel_delimiter))
@@ -91,12 +91,12 @@ class CrossValidation:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("../input/train_multilabel.csv")
+    df = pd.read_csv("../input/train_file.csv")
     cv = CrossValidation(
         df,
         shuffle=True,
-        target_cols=["attribute_ids"],
-        problem_type="multiclass_classification",
+        target_cols=["response"],
+        problem_type="binary_classification",
         multilabel_delimiter=" ",
     )
     df_split = cv.split()
