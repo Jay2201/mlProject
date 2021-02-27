@@ -1,4 +1,4 @@
-export TRAINING_DATA = /home/zetabyte/mlProject/input/train_folds.csv
+export TRAINING_DATA = /home/zetabyte/mlProject/input/train_file_folds.csv
 export TEST_DATA = /home/zetabyte/mlProject/input/test.csv
 
 export MODEL = $1
