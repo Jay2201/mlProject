@@ -91,14 +91,15 @@ class CrossValidation:
 
 
 if __name__ == "__main__":
-    df = pd.read_csv("../input/train_file.csv")
+    df = pd.read_csv("/home/zetabyte/mlProject/input/train_file.csv")
     cv = CrossValidation(
         df,
         shuffle=True,
-        target_cols=["response"],
+        target_cols=["target"],
         problem_type="binary_classification",
         multilabel_delimiter=" ",
     )
     df_split = cv.split()
     print(df_split.head())
     print(df_split.kfold.value_counts())
+    df_split.to_csv("/home/zetabyte/mlProject/input/train_file_folds.csv", index=False)
